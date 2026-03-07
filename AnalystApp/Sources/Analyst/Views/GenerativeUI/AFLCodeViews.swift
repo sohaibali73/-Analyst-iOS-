@@ -66,7 +66,7 @@ struct AFLGenerateCardView: View {
                     
                     Button {
                         if let code = result.aflCode {
-                            ClipboardManager.copy()
+                            ClipboardManager.copy(code)
                             copied = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 copied = false
@@ -336,7 +336,7 @@ struct AFLDebugCardView: View {
                     
                     Button {
                         if let code = result.fixedCode {
-                            ClipboardManager.copy()
+                            ClipboardManager.copy(code)
                             copied = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 copied = false
@@ -510,7 +510,7 @@ struct AFLSanityCheckCardView: View {
                     if result.fixedCode != nil {
                         Button {
                             if let code = result.fixedCode {
-                                ClipboardManager.copy()
+                                ClipboardManager.copy(code)
                                 copied = true
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                     copied = false
@@ -653,7 +653,7 @@ struct CodeExecutionView: View {
                 
                 Button {
                     let text = result.output ?? result.error ?? ""
-                    ClipboardManager.copy()
+                    ClipboardManager.copy(text)
                     copied = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         copied = false
@@ -878,7 +878,7 @@ struct CodeSandboxView: View {
                 .disabled(isRunning)
                 
                 Button {
-                    ClipboardManager.copy()
+                    ClipboardManager.copy(code)
                     copied = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         copied = false
