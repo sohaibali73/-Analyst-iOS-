@@ -1,0 +1,84 @@
+# ========================
+# macOS System Files
+# ========================
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# ========================
+# Xcode
+# ========================
+# Build products
+build/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+
+# Xcode Playground cache
+playground.xcworkspace
+
+# ========================
+# Swift Package Manager
+# ========================
+.build/
+.swiftpm/
+*.resolved
+
+# ========================
+# CocoaPods (if used in future)
+# ========================
+Pods/
+# Note: do NOT ignore *.xcworkspace – the one inside .xcodeproj is required by Xcode.
+# Only ignore a root-level CocoaPods-generated workspace if you add one.
+# MyApp.xcworkspace  ← uncomment and rename if CocoaPods is adopted
+
+# ========================
+# Carthage
+# ========================
+Carthage/Build/
+
+# ========================
+# Fastlane
+# ========================
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# ========================
+# Code Coverage
+# ========================
+*.gcno
+
+# ========================
+# Secrets & Environment
+# ========================
+*.env
+.env
+Secrets.swift
+APIKeys.swift
+
+# ========================
+# OS / Editor artifacts
+# ========================
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
