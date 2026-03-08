@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Analyst",
+    name: "AnalystApp",
     platforms: [
         .iOS(.v17),
         .macOS(.v14),
@@ -12,7 +12,7 @@ let package = Package(
         .watchOS(.v10)
     ],
     products: [
-        .executable(
+        .library(
             name: "Analyst",
             targets: ["Analyst"]
         ),
@@ -22,10 +22,13 @@ let package = Package(
         // .package(url: "https://github.com/...", from: "1.0.0"),
     ],
     targets: [
-        .executableTarget(
+        .target(
             name: "Analyst",
             dependencies: [],
-            path: "Sources/Analyst"
+            path: "Sources/Analyst",
+            swiftSettings: [
+                .swiftLanguageMode(.v5)
+            ]
         ),
     ]
 )
