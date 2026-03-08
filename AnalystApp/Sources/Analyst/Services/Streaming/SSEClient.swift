@@ -229,7 +229,7 @@ actor SSEClient {
     // MARK: - Debug Logging
 
     /// Logs messages only in DEBUG builds.
-    private func debugLog(_ message: String) {
+    nonisolated private func debugLog(_ message: String) {
         #if DEBUG
         print("📡 SSEClient: \(message)")
         #endif

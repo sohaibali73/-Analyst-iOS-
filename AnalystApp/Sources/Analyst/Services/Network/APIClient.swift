@@ -37,6 +37,12 @@ actor APIClient {
         self.baseURL = baseURL
         self.keychain = keychain
 
+        // Restore existing token from Keychain (must be done during stored-property init phase for Swift 6)
+        let storedToken = keychain.get(.accessToken)
+        let hasToken = storedToken != nil && !(storedToken?.isEmpty ?? true)
+        self.accessToken = hasToken ? storedToken : nil
+        self.isAuthenticated = hasToken
+
         // Configure session with sensible timeouts
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 30
@@ -45,9 +51,9 @@ actor APIClient {
         self.session = URLSession(configuration: configuration)
 
         // Configure decoder with snake_case conversion and flexible date parsing
-        self.decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        decoder.dateDecodingStrategy = .custom { decoder in
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        jsonDecoder.dateDecodingStrategy = .custom { decoder in
             let container = try decoder.singleValueContainer()
             let dateString = try container.decode(String.self)
 
@@ -85,16 +91,9 @@ actor APIClient {
                 }
             }
 
-            // Last resort: return current date instead of crashing
-            debugLog("⚠️ Date decoding failed for: \(dateString), using current date")
             return Date()
         }
-
-        // Restore existing token from Keychain
-        if let token = keychain.get(.accessToken), !token.isEmpty {
-            self.accessToken = token
-            self.isAuthenticated = true
-        }
+        self.decoder = jsonDecoder
     }
 
     // MARK: - Auth Methods
@@ -468,7 +467,8 @@ actor APIClient {
     // MARK: - Debug Logging
 
     /// Logs messages only in DEBUG builds to prevent leaking sensitive data in production.
-    private func debugLog(_ message: String) {
+    /// Marked `nonisolated` since it only calls `print` and is safe to call from init.
+    nonisolated private func debugLog(_ message: String) {
         #if DEBUG
         print("🌐 APIClient: \(message)")
         #endif

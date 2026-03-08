@@ -60,12 +60,13 @@ struct RootView: View {
             }
             #if os(iOS) || os(visionOS)
             .trackActivity() // Track user activity for auto-lock
-
-            // App Lock overlay (shown when locked)
-            if auth.isAuthenticated && biometricAuth.isEnabled && !biometricAuth.isUnlocked {
-                AppLockView()
-                    .transition(.opacity)
-                    .zIndex(1000) // Ensure it's on top
+            .overlay {
+                // App Lock overlay (shown when locked)
+                if auth.isAuthenticated && biometricAuth.isEnabled && !biometricAuth.isUnlocked {
+                    AppLockView()
+                        .transition(.opacity)
+                        .zIndex(1000) // Ensure it's on top
+                }
             }
             #endif
         }

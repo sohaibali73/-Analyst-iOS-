@@ -29,7 +29,11 @@ class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
         let rootTemplate = buildRootTemplate()
         interfaceController.setRootTemplate(rootTemplate, animated: true, completion: nil)
     }
-    
+}
+
+// MARK: - CarPlay Disconnect (in extension to silence protocol matching warning)
+
+extension CarPlaySceneDelegate {
     func templateApplicationScene(
         _ templateApplicationScene: CPTemplateApplicationScene,
         didDisconnect interfaceController: CPInterfaceController
