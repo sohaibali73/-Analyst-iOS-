@@ -25,6 +25,10 @@ struct ChatView: View {
 
             VStack(spacing: 0) {
                 chatHeader
+                // Error banner
+                if let errorMessage = viewModel.userFacingError {
+                    errorBanner(errorMessage)
+                }
                 messagesList
                 if !pendingAttachments.isEmpty { attachmentPreview }
                 inputArea
@@ -86,6 +90,42 @@ struct ChatView: View {
             }
         }
         .animation(.easeOut(duration: 0.25), value: showSidebar)
+    }
+
+    // MARK: - Error Banner
+
+    /// Displays a dismissible error banner at the top of the chat.
+    @ViewBuilder
+    private func errorBanner(_ message: String) -> some View {
+        HStack(spacing: 10) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.chartRed)
+
+            Text(message)
+                .font(.quicksandRegular(12))
+                .foregroundColor(.white.opacity(0.8))
+                .lineLimit(2)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            Button {
+                withAnimation(AnimationProvider.quick) {
+                    viewModel.clearError()
+                }
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(.white.opacity(0.4))
+                    .frame(width: 24, height: 24)
+                    .background(Color.white.opacity(0.08))
+                    .clipShape(Circle())
+            }
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .background(Color.chartRed.opacity(0.12))
+        .transition(.move(edge: .top).combined(with: .opacity))
+        .animation(AnimationProvider.quick, value: viewModel.error == nil)
     }
 
     // MARK: - Header

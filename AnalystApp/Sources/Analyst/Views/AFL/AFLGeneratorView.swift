@@ -20,8 +20,8 @@ struct AFLGeneratorView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 20) {
                         // Error banner
-                        if let error = viewModel.error {
-                            errorBanner(error)
+                        if let errorMessage = viewModel.userFacingError {
+                            errorBanner(errorMessage)
                                 .padding(.horizontal, 20)
                                 .padding(.top, 16)
                         }
@@ -30,13 +30,13 @@ struct AFLGeneratorView: View {
                         if showTemplatePicker {
                             templateSection
                                 .padding(.horizontal, 20)
-                                .padding(.top, viewModel.error == nil ? 16 : 0)
+                                .padding(.top, viewModel.userFacingError == nil ? 16 : 0)
                         }
 
                         // Prompt input
                         promptSection
                             .padding(.horizontal, 20)
-                            .padding(.top, viewModel.error == nil && !showTemplatePicker ? 20 : 8)
+                            .padding(.top, viewModel.userFacingError == nil && !showTemplatePicker ? 20 : 8)
 
                         // Stats bar when code is ready
                         if !viewModel.generatedCode.isEmpty, let stats = viewModel.aflStats {

@@ -36,7 +36,7 @@ final class TabViewModel {
     }
     
     /// Feature destinations accessible via NavigationStack push (not in tab bar)
-    enum Feature: String, Hashable {
+    enum Feature: String, Hashable, CaseIterable {
         case backtest = "Backtest Analysis"
         case research = "Company Research"
         case presentations = "Presentations"
